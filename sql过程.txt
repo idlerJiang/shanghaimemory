@@ -1,0 +1,95 @@
+\connect root@localhost
+密码：123456
+\sql;
+create database shanghai_memory;
+use shanghai_memory
+新闻：
+CREATE TABLE news (
+id INT AUTO_INCREMENT PRIMARY KEY,
+sourceURL VARCHAR(255) NOT NULL,
+imgURL VARCHAR(255) NOT NULL,
+title VARCHAR(255) NOT NULL,
+content TEXT NOT NULL,
+publishDate DATE NOT NULL
+) CHARSET=utf8mb4;
+
+插入语句：
+--这个放在大块里面
+INSERT INTO news (sourceURL, imgURL, title, content, publishDate)
+VALUES ('https://www.shanghai.gov.cn/nw9822/20240620/7172d81f519d40b0928d96d5aba7f13e.html', 'https://www.shanghai.gov.cn/cmsres/86/8680ed9ebf014aeb83e3b2682868112b/35333e48cef917883403f1a59393e441.jpg', '焦点关注 新闻发布会预告', '市政府新闻发布会介绍2024世界人工智能大会暨人工智能全球治理高级别会议筹备进展情况。', '2024-06-20');
+
+
+
+--这个也放大块里面
+INSERT INTO news (sourceURL, imgURL, title, content, publishDate)
+VALUES ('https://news.cctv.com/2024/06/19/ARTIQgUveDufFYoDqsgyvCwu240619.shtml', 'https://p5.img.cctvpic.com/photoworkspace/contentimg/2024/06/19/2024061920060866559.png', '2024陆家嘴论坛今天举行', '为期两天的2024陆家嘴论坛于6月19日在上海举行。中国人民银行、国家金融监督管理总局、中国证监会和国家外汇管理局等部门负责人表示，将推出多项措施助力高质量发展。', '2024-06-19');
+
+
+
+INSERT INTO news (sourceURL, imgURL, title, content, publishDate)
+VALUES ('https://news.cctv.com/2024/06/20/ARTIyz06yhMBf4bWXkSB7yHW240620.shtml', 'https://p5.img.cctvpic.com/photoworkspace/contentimg/2024/06/20/2024062017122149612.jpg', '架起电影之桥 深化交流互鉴', '第26届上海国际电影节的世界回响。', '2024-06-20');
+
+
+
+INSERT INTO news (sourceURL, imgURL, title, content, publishDate)
+VALUES ('https://www.cctv.com/2024/06/17/ARTI85OnnfOQtE13ouXgAXW2240617.shtml', 'https://p1.img.cctvpic.com/photoworkspace/contentimg/2024/06/17/2024061709393533049.jpg', '纪录电影《地上的云朵》全球首映礼在上海举行', '6月16日，由中央新闻纪录电影制片厂（集团）出品、摄制的纪录电影《地上的云朵》全球首映礼在上海CMG融媒影城举行。', '2024-06-17');
+
+
+
+INSERT INTO news (sourceURL, imgURL, title, content, publishDate)
+VALUES ('https://www.thepaper.cn/newsDetail_forward_27838713', 'https://imagecloud.thepaper.cn/thepaper/image/310/884/246.jpg', 'FMI宣布成立上海分部', '6月23日，FMI Japan株式会社（FMI）宣布成立上海分部，未来将与中国香港、日本和新加坡办公室协作，为客户提供专业的海外物业管理及个性化增值服务。', '2024-06-24');
+
+
+
+INSERT INTO news (sourceURL, imgURL, title, content, publishDate)
+VALUES ('http://www.sh.chinanews.com.cn/shms/2024-06-20/125630.shtml', 'http://www.sh.chinanews.com.cn/shms/2024-06-20/U810P939T4D125630F15DT20240620174855.jpg', '上海边检总站与上海市浦东新区人民政府签署合作协议', '6月20日，上海边检总站应邀参加2024上海市浦东新区促进贸易高质量发展大会，并与上海市浦东新区人民政府签署《推动浦东综合改革试点 打造社会主义现代化建设引领区合作协议》。', '2024-06-20');
+
+
+
+INSERT INTO news (sourceURL, imgURL, title, content, publishDate)
+VALUES ('https://www.thepaper.cn/newsDetail_forward_25670140', 'https://imagecloud.thepaper.cn/thepaper/image/282/665/937.jpg', '京沪新政首日实探', '上海观望购房者连夜下单二手房，新房售楼处到访量翻倍。', '2024-12-15');
+
+
+
+INSERT INTO news (sourceURL, imgURL, title, content, publishDate)
+VALUES ('https://baijiahao.baidu.com/s?id=1802210620469717156&wfr=spider&for=pc', 'https://pics7.baidu.com/feed/29381f30e924b899f4e838c872da329b087bf650.jpeg@f_auto?token=9180d71bce47adcbe0717dc3954790ef', '6月19日', '上海早新闻', '2023-6-19');
+
+
+
+INSERT INTO news (sourceURL, imgURL, title, content, publishDate)
+VALUES ('https://www.jfdaily.com/sgh/detail?id=1360482', 'https://sghimages.shobserver.com/img/catch/2024/06/24/aac56e3f-3a79-42ab-89f8-697c2cecf291.jpg', '静安区纪委监委消息', '静安区、上海农场生活服务有限公司三名公职人员接受纪律审查和监察调查。', '2024-06-24');
+
+
+
+INSERT INTO news (sourceURL, imgURL, title, content, publishDate)
+VALUES ('https://www.dzwww.com/xinwen/jishixinwen/202406/t20240624_14381590.htm', 'https://appimg.dzwww.com/2024/0624/1i14mohjbb5b1kt2v2.jpg', '上海市五一劳动奖表彰大会快讯', '星环科技荣获2024年上海市五一劳动奖状。', '2024-06-19');
+
+
+评论：
+CREATE TABLE comments (
+id INT AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(255) NOT NULL,
+email VARCHAR(255) NOT NULL,
+content TEXT NOT NULL,
+publishDate DATETIME NOT NULL
+) CHARSET=utf8mb4;
+
+插入语句：
+INSERT INTO comments (name, email, content, publishDate)
+VALUES ('姚震阳', 'lwinlong@foxmail.com', '上海是中国最重要的城市之一，它是中国共产党的诞生地、是多元文化的交汇点、是历史变革的前沿。古代的衣冠南渡、帝国主义带来的十里洋场、辛亥革命打响的反封建第一枪、中国共产党带来的新中国新篇章这些重要的历史事件都在上海留下的深刻的痕迹。因此，了解这座城市的历史，便能了解这个国家的命运沉浮。上海有很多重要的名人故居、博物馆和红色基地，这些珍贵的文化资源值得广大青年们去参观学习。');
+
+INSERT INTO comments (name, email, content, publishDate)
+VALUES ('袁天成', 'yuantiancheng2003@163.com', '上海是中国最重要的城市之一，它是中国共产党的诞生地、是多元文化的交汇点、是历史变革的前沿。古代的衣冠南渡、帝国主义带来的十里洋场、辛亥革命打响的反封建第一枪、中国共产党带来的新中国新篇章这些重要的历史事件都在上海留下的深刻的痕迹。因此，了解这座城市的历史，便能了解这个国家的命运沉浮。上海有很多重要的名人故居、博物馆和红色基地，这些珍贵的文化资源值得广大青年们去参观学习。');
+
+INSERT INTO comments (name, email, content, publishDate)
+VALUES ('孙清', '257864214@qq.com', '上海是中国最重要的城市之一，它是中国共产党的诞生地、是多元文化的交汇点、是历史变革的前沿。古代的衣冠南渡、帝国主义带来的十里洋场、辛亥革命打响的反封建第一枪、中国共产党带来的新中国新篇章这些重要的历史事件都在上海留下的深刻的痕迹。因此，了解这座城市的历史，便能了解这个国家的命运沉浮。上海有很多重要的名人故居、博物馆和红色基地，这些珍贵的文化资源值得广大青年们去参观学习。');
+
+验证码：
+CREATE TABLE idcode (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    code INT(6) NOT NULL,
+    timestamp DATETIME NOT NULL
+) CHARSET=utf8mb4;
+
