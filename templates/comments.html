@@ -105,105 +105,137 @@
   background-repeat:no-repeat;">
 
 
-<header class="page-head u-clearfix u-header u-sticky u-sticky-7a89 u-header myheader" id="sec-ba3e">
-    <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <a href="https://ShanghaiMemory.Asia" class="head-logo u-image u-logo u-image-1">
-            <img src="{{ url_for('static', filename='css/ai-logo.png') }}" class="u-logo-image u-logo-image-1">
-        </a>
-        <nav class="nav-bar u-menu u-menu-one-level u-offcanvas u-menu-1" data-position="nav-bar">
-            <div class="menu-collapse"
-                 style="font-size: 1rem; letter-spacing: 0px; text-transform: uppercase; font-weight: 500;">
-                <a class="u-button-style u-custom-active-border-color u-custom-active-color u-custom-border u-custom-border-color u-custom-borders u-custom-hover-border-color u-custom-hover-color u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-text-color u-custom-text-decoration u-custom-text-hover-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                   href="#">
-                    <svg class="u-svg-link" viewBox="0 0 24 24">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use>
-                    </svg>
-                    <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px"
-                         xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                            <rect y="1" width="16" height="2"></rect>
-                            <rect y="7" width="16" height="2"></rect>
-                            <rect y="13" width="16" height="2"></rect>
-                        </g>
-                    </svg>
-                </a>
-            </div>
-            <div class="u-custom-menu u-nav-container">
-                <ul class="u-nav u-spacing-2 u-unstyled u-nav-1 nav-slider">
-                    <li class="u-nav-item"><a
-                            class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-                            href="/" style="padding: 10px 20px;">首页</a>
-
-                    </li>
-                    <li class="u-nav-item"><a
-                            class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-                            href="#" style="padding: 10px 20px;">学习园地</a>
-                        <ul class="bb_ul bb_ul_3 frosted-glass">
-                            <li><a href="/class">微课堂</a></li>
-                            <li><a href="/book">好书推荐</a></li>
-                            <li><a href="/quiz">知识竞赛</a></li>
-                        </ul>
-                    </li>
-                    <li class="u-nav-item"><a
-                            class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-                            href="#" style="padding: 10px 20px;">线上参观</a>
-                        <ul class="bb_ul bb_ul_2 frosted-glass">
-                            <li><a href="/3d">3D场馆</a></li>
-                            <li><a href="http://museum.odb.sh.cn/images/odb/360/vtour30/index.html">特别展览</a></li>
-                        </ul>
-                    </li>
-                    <li class="u-nav-item"><a
-                            class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-                            href="/comments" style="padding: 10px 20px;">我有感想</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-</header>
-
 <header>
     <h1>留言板</h1>
 </header>
 <div class="container">
     <h2>留下你的学习心得</h2>
-    <form id="commentForm" enctype='application/json' method="POST">
+    <form id="commentForm" method="POST">
         <label for="username">用户名：</label>
         <input type="text" id="username" name="username" required>
-
         <label for="email">邮箱：</label>
         <input type="email" id="email" name="email" required>
+
+        <!-- 注意：我修改了验证码和评论的label的for属性，以匹配对应的input的id -->
+        <label for="token_code">验证码：</label>
+        <input type="text" id="token_code" name="token_code" required>
 
         <label for="comment">评论内容：</label>
         <textarea id="comment" name="comment" required></textarea>
 
-        <button type="submit">提交</button>
+        <button id="getCaptchaBtn">获取验证码</button>
+        <button type="submit" id="submitBtn">提交</button>
     </form>
 </div>
-
 <script>
-    document.getElementById("commentForm").addEventListener("submit", function (event) {
-        event.preventDefault();
+    document.addEventListener('DOMContentLoaded', function () {
+        // 获取获取验证码按钮
+        var getCaptchaBtn = document.getElementById('getCaptchaBtn');
+        var submitBtn = document.getElementById('submitBtn');
+        // 获取表单元素
+        var form = document.getElementById('commentForm');
 
-        // 获取表单数据
-        const username = document.getElementById("username").value;
-        const email = document.getElementById("email").value;
-        const comment = document.getElementById("comment").value;
+        // 阻止表单的默认提交行为（针对提交按钮，尽管在这里不是必要的）
+        submitBtn.addEventListener('click', function (event) {
+            console.log("!!!");
+            event.preventDefault(); // 阻止按钮的默认行为（对于type="submit"的按钮）
+            // 假设您已经验证了表单数据
+            // 这里只是简单地获取邮箱地址作为示例
+            var username = document.getElementById('username').value;
+            var email = document.getElementById('email').value;
+            var captcha = document.getElementById('token_code').value;
+            var content = document.getElementById('comment').value;
 
-        // 在这里可以将数据提交到服务器或者执行其他操作
-        // 这里仅在控制台中显示数据
-        console.log("用户名: " + username);
-        console.log("邮箱: " + email);
-        console.log("评论内容: " + comment);
+            if (!/^\S+$/.test(username)) { // 用户名不能为空且不能包含空格
+                alert('用户名不能为空且不能包含空格！');
+                return;
+            }
+            if (!/^\S+@\S+\.\S+$/.test(email)) { // 邮箱格式验证
+                alert('请输入有效的邮箱地址！');
+                return;
+            }
+            if (captcha === '') { // 验证码不能为空
+                alert('请输入验证码！');
+                return;
+            }
+            if (content.trim() === '') { // 内容不能为空
+                alert('请输入内容！');
+                return;
+            }
 
-        // 清空表单
-        document.getElementById("username").value = "";
-        document.getElementById("email").value = "";
-        document.getElementById("comment").value = "";
+            // 发送POST请求到服务器
+            fetch('/submitComment', { // 假设这是处理表单提交的服务器端点
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    email: email,
+                    captcha: captcha,
+                    content: content
+                }) // 将邮箱地址作为JSON数据发送
+            })
+                .then(response => {
+                    // 检查响应状态
+                    if (!response.ok) {
+                        throw new Error('Failed to submit form');
+                    }
+                    return response.text(); // 假设服务器返回纯文本
+                })
+                .then(data => {
+                    console.log(data, "???");
+                    // 假设服务器返回"success"表示提交成功
+                    if (data === 'success') {
+                        alert('提交成功！');
+                        // 可以选择清空表单或进行其他操作
+                    } else {
+                        // 如果不是"success"，则认为是提交失败
+                        alert('提交失败，请检查您的输入或稍后重试！');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('提交时发生错误，请稍后重试！');
+                });
+        });
 
-        window.location = "www.shanghaimemory.asia";
+        // 获取验证码按钮的点击事件处理
+        getCaptchaBtn.addEventListener('click', function () {
+            event.preventDefault();
+            var emailInput = document.getElementById('email');
+            var email = emailInput.value;
+            // 检查邮箱是否填写
+            if (!email || !/\S+@\S+\.\S+/.test(email)) {
+                alert('请填写有效的邮箱地址！');
+                return;
+            }
+            // 使用fetch发送POST请求到指定网址，这里假设是/send-captcha
+            fetch('/getCAPTCHA', {
+                method: 'POST', // 发送验证码使用POST请求
+                headers: {
+                    'Content-Type': 'application/json' // 设置请求头为JSON
+                },
+                body: JSON.stringify({email: email}) // 将邮箱地址作为JSON数据发送
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to send captcha');
+                    }
+                    return response.text(); // 假设服务器返回纯文本
+                })
+                .then(data => {
+                    // 假设服务器返回"Captcha sent"，表示验证码已发送
+                    alert('验证码已发送至您的邮箱！');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('发送验证码失败，请稍后重试！');
+                });
+        });
     });
 </script>
+
 
 
 <footer class="u-align-center-sm u-align-center-xs u-clearfix u-footer u-palette-2-dark-2"
