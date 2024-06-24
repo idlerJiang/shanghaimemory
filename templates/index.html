@@ -144,11 +144,11 @@
                                 <div class="u-layout-row ">
                                     <div class="u-align-left u-container-style u-hover-feature u-image u-layout-cell u-left-cell u-shading u-size-60 u-image-1"
                                          data-image-width="1080" data-image-height="1080"
-                                         data-href="https://j.eastday.com/p/1695362412049393/4828" data-target="_blank"
-                                         style="background:url(https://mz.eastday.com/63087672.jpg?imageView2/1/w/675/h/450);background-size: cover; background-repeat: no-repeat;background-position-x: center;background-position-y: center;border-color:rgb(255, 255, 255) !important">
+                                         data-href="{{ news[0][0] }}" data-target="_blank"
+                                         style="background:url({{ news[0][1] }});background-size: cover; background-repeat: no-repeat;background-position-x: center;background-position-y: center;border-color:rgb(255, 255, 255) !important">
                                         <div class="u-container-layout u-valign-middle u-container-layout-1 bgmask">
-                                            <h2 class="u-align-left-sm u-text u-text-2">市政府新闻发布会</h2>
-                                            <p class="u-text u-text-3">&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;&thinsp;9月26日(周二)下午2:30，举行市政府新闻发布会，邀请相关市领导，以及市体育局、市教委、黄浦区等相关负责同志出席，介绍上海推进全球著名体育城市建设等有关情况，并回答记者提问。</p>
+                                            <h2 class="u-align-left-sm u-text u-text-2">{{ news[0][2] }}</h2>
+                                            <p class="u-text u-text-3">{{ news[0][3] }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -158,16 +158,14 @@
                                 <div class="u-layout-col">
                                     <div class="u-size-30">
                                         <div class="u-layout-row">
-
-
                                             <div class="u-align-left u-container-style u-hover-feature u-layout-cell u-shape-rectangle u-size-30 u-layout-cell-2"
-                                                 data-href="http://sh.news.cn/20230929/84d32c8aa42d40799d41317ee674f7b1/c.html"
+                                                 data-href="{{ news[1][0] }}"
                                                  data-target="_blank"
-                                                 style="background:url(http://sh.news.cn/20230929/84d32c8aa42d40799d41317ee674f7b1/2023092984d32c8aa42d40799d41317ee674f7b1_20230929fc04f0cbde9d4c12a8e0932ff6437e7d.png);background-size: cover; background-repeat: no-repeat;background-position-x: center;background-position-y: center;border-color:rgb(255, 255, 255) !important">
+                                                 style="background:url({{ news[1][1] }});background-size: cover; background-repeat: no-repeat;background-position-x: center;background-position-y: center;border-color:rgb(255, 255, 255) !important">
                                                 <div class="u-container-layout u-valign-middle u-container-layout-2 bgmask">
-                                                    <h3 class="u-text u-text-4 mustwhite">千年泖塔焕新亮灯</h3>
+                                                    <h3 class="u-text u-text-4 mustwhite">{{ news[1][2] }}</h3>
                                                     <p class="u-text u-text-5 mustwhite">
-                                                        9月28日中秋前夜，位于上海市青浦区的“世界航标遗产”泖塔焕新亮灯，向公众开放。</p>
+                                                        {{ news[1][3] }}</p>
                                                 </div>
                                             </div>
 
@@ -401,7 +399,7 @@
                     </div>
                     <div class="u-align-left u-container-style u-layout-cell u-right-cell u-size-30 u-layout-cell-2">
                         <div class="u-container-layout u-valign-middle u-container-layout-2">
-                            <a href="Home.html"
+                            <a href="/3d"
                                class="u-border-2 u-border-white u-btn u-btn-round u-button-style u-radius-50 u-btn-2"
                                target="_blank">LEARN MORE</a>
                         </div>
@@ -465,7 +463,7 @@
           background-repeat:no-repeat;
           background-attachment:fixed;
           border-radius: 8px;">
-                <a href="p_Onlinelearning/OnlineClass.html"
+                <a href="/class"
                    class="u-border-2 u-border-white u-btn u-btn-rectangle u-button-style u-none u-btn-1"
                    target="_blank">learn more</a>
             </div>
@@ -484,7 +482,7 @@
           background-repeat:no-repeat;
           background-attachment:fixed;
           border-radius: 8px;">
-                <a href="p_Books/tushu.html" class="u-border-2 u-border-white u-btn u-button-style u-none u-btn-1"
+                <a href="/book" class="u-border-2 u-border-white u-btn u-button-style u-none u-btn-1"
                    target="_blank">learn more</a>
             </div>
         </div>
@@ -503,7 +501,7 @@
           background-attachment:fixed;
           border-radius: 8px;"
             >
-                <a href="p_Quiz/quiz.html"
+                <a href="/quiz"
                    class="u-border-2 u-border-white u-btn u-btn-rectangle u-button-style u-none u-btn-1">learn more</a>
             </div>
         </div>
@@ -707,10 +705,10 @@ background: linear-gradient(0deg, rgba(0,13,36,1) 21%, rgba(0,13,36,0.8772102591
                         <div alt="" class="u-image u-image-circle u-image-1" data-image-width="1280"
                              data-image-height="774" id="no1"></div>
                         <h4 class="u-align-center u-text u-text-default u-text-2 ename"
-                            style="text-align: left; margin-left:45%">姚震阳</h4>
-                        <p class="u-text u-text-3 email" style="font-size:small; ">lwinlong@foxmail.com</p>
+                            style="text-align: left; margin-left:45%">{{ comments[0][0] }}</h4>
+                        <p class="u-text u-text-3 email" style="font-size:small; ">{{ comments[0][1] }}</p>
                         <p class="u-text u-text-4 econtent" style="margin-top:23%;">
-                            上海是中国最重要的城市之一，它是中国共产党的诞生地、是多元文化的交汇点、是历史变革的前沿。古代的衣冠南渡、帝国主义带来的十里洋场、辛亥革命打响的反封建第一枪、中国共产党带来的新中国新篇章这些重要的历史事件都在上海留下的深刻的痕迹。因此，了解这座城市的历史，便能了解这个国家的命运沉浮。上海有很多重要的名人故居、博物馆和红色基地，这些珍贵的文化资源值得广大青年们去参观学习。。</p>
+                            {{ comments[0][2] }}</p>
                     </div>
                 </div>
                 <div class="u-align-center u-container-style u-list-item u-palette-1-base u-radius-50 u-repeater-item u-shape-round u-list-item-2"
@@ -725,10 +723,10 @@ background: linear-gradient(0deg, rgba(0,13,36,1) 21%, rgba(0,13,36,0.8772102591
                         <div alt="" class="u-image u-image-circle u-image-2" data-image-width="1280"
                              data-image-height="774" id="no2"></div>
                         <h4 class="u-align-center u-text u-text-default u-text-5 ename"
-                            style="text-align: left; margin-left:45%">小明</h4>
-                        <p class="u-text u-text-6 email" style="font-size:small">lwinlong@foxmail.com</p>
+                            style="text-align: left; margin-left:45%">{{ comments[1][0] }}</h4>
+                        <p class="u-text u-text-6 email" style="font-size:small">{{ comments[1][1] }}</p>
                         <p class="u-text u-text-7 econtent" style="margin-top:23%;">
-                            海是中国最重要的城市之一，它是中国共产党的诞生地、是多元文化的交汇点、是历史变革的前沿。古代的衣冠南渡、帝国主义带来的十里洋场、辛亥革命打响的反封建第一枪、中国共产党带来的新中国新篇章这些重要的历史事件都在上海留下的深刻的痕迹。因此，了解这座城市的历史，便能了解这个国家的命运沉浮。上海有很多重要的名人故居、博物馆和红色基地，这些珍贵的文化资源值得广大青年们去参观学习。</p>
+                           {{ comments[1][2] }}</p>
                     </div>
                 </div>
                 <div class="u-align-center u-container-style u-list-item u-palette-1-base u-radius-50 u-repeater-item u-shape-round u-list-item-3"
@@ -744,10 +742,10 @@ background: linear-gradient(0deg, rgba(0,13,36,1) 21%, rgba(0,13,36,0.8772102591
                         <div alt="" class="u-image u-image-circle u-image-3" data-image-width="1280"
                              data-image-height="774" idd="no3"></div>
                         <h4 class="u-align-center u-text u-text-default u-text-8 ename"
-                            style="text-align: left; margin-left:45%">小小明</h4>
-                        <p class="u-text u-text-9 email" style="font-size:small">lwinlong@foxmail.com</p>
+                            style="text-align: left; margin-left:45%">>{{ comments[2][0] }}</h4>
+                        <p class="u-text u-text-9 email" style="font-size:small">>{{ comments[2][1] }}</p>
                         <p class="u-text u-text-10 econtent" style="margin-top:23%;">
-                            海是中国最重要的城市之一，它是中国共产党的诞生地、是多元文化的交汇点、是历史变革的前沿。古代的衣冠南渡、帝国主义带来的十里洋场、辛亥革命打响的反封建第一枪、中国共产党带来的新中国新篇章这些重要的历史事件都在上海留下的深刻的痕迹。因此，了解这座城市的历史，便能了解这个国家的命运沉浮。上海有很多重要的名人故居、博物馆和红色基地，这些珍贵的文化资源值得广大青年们去参观学习。</p>
+                            {{ comments[2][2] }}</p>
                     </div>
                 </div>
             </div>
