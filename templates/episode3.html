@@ -26,8 +26,8 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/templatemo-video-catalog.css">
         
-        <script class="u-script" type="text/javascript" src="js/jquery.js" defer=""></script>
-        <script class="u-script" type="text/javascript" src="js/nicepage.js" defer=""></script>
+        <script class="u-script" type="text/javascript" src="{{ url_for('static',filename='js/jquery.js') }}" defer=""></script>
+        <script class="u-script" type="text/javascript" src="{{ url_for('static',filename='js/nicepage.js') }}" defer=""></script>
         <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
         <link rel="shortcut icon" href="Resources/favicon.ico" type="image/x-icon">
         <link rel="bookmark" href="Resources/favicon.ico" type="image/x-icon">
@@ -50,7 +50,7 @@
         <header class="page-head u-clearfix u-header u-sticky u-sticky-7a89 u-header" id="sec-ba3e">
         <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
             <a href="https://ShanghaiMemory.Asia" class="head-logo u-image u-logo u-image-1">
-              <img src="Resources/ai-logo.png" class="u-logo-image u-logo-image-1">
+              <img src="{{ url_for('static',filename='Resources/ai-logo.png') }}" class="u-logo-image u-logo-image-1">
             </a>
     
     
@@ -177,7 +177,7 @@
 						<div class="col-12">
 							<!-- Video player 1422x800 -->
 							<video width="1422" height="800" controls autoplay>
-								<source src="video/episode3.mp4" type="video/mp4">
+								<source src="{{ url_for('static',filename='video/episode3.mp4') }}" type="video/mp4">
 								Your browser does not support the video tag.
 							</video>
 						</div>
@@ -232,7 +232,7 @@
 							<div class="row tm-catalog-item-list">
 								<div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
 									<div class="position-relative tm-thumbnail-container">
-										<img src="img/tn-01.jpg" alt="Image" class="img-fluid tm-catalog-item-img">
+										<img src="{{ url_for('static',filename='img/tn-01.jpg') }}" alt="Image" class="img-fluid tm-catalog-item-img">
 										<a href="video-page.html" class="position-absolute tm-img-overlay">
 											<i class="fas fa-play tm-overlay-icon"></i>
 										</a>
@@ -244,7 +244,7 @@
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
 									<div class="position-relative tm-thumbnail-container">
-										<img src="img/tn-02.jpg" alt="Image" class="img-fluid tm-catalog-item-img">
+										<img src="{{ url_for('static',filename='img/tn-02.jpg') }}" alt="Image" class="img-fluid tm-catalog-item-img">
 										<a href="video-page.html" class="position-absolute tm-img-overlay">
 											<i class="fas fa-play tm-overlay-icon"></i>
 										</a>
@@ -256,7 +256,7 @@
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
 									<div class="position-relative tm-thumbnail-container">
-										<img src="img/tn-03.jpg" alt="Image" class="img-fluid tm-catalog-item-img">
+										<img src="{{ url_for('static',filename='img/tn-03.jpg') }}" alt="Image" class="img-fluid tm-catalog-item-img">
 										<a href="video-page.html" class="position-absolute tm-img-overlay">
 											<i class="fas fa-play tm-overlay-icon"></i>
 										</a>
@@ -268,7 +268,7 @@
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
 									<div class="position-relative tm-thumbnail-container">
-										<img src="img/tn-04.jpg" alt="Image" class="img-fluid tm-catalog-item-img">
+										<img src="{{ url_for('static',filename='img/tn-04.jpg') }}" alt="Image" class="img-fluid tm-catalog-item-img">
 										<a href="video-page.html" class="position-absolute tm-img-overlay">
 											<i class="fas fa-play tm-overlay-icon"></i>
 										</a>
@@ -280,7 +280,7 @@
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
 									<div class="position-relative tm-thumbnail-container">
-										<img src="img/tn-05.jpg" alt="Image" class="img-fluid tm-catalog-item-img">
+										<img src="{{ url_for('static',filename='img/tn-05.jpg') }}" alt="Image" class="img-fluid tm-catalog-item-img">
 										<a href="video-page.html" class="position-absolute tm-img-overlay">
 											<i class="fas fa-play tm-overlay-icon"></i>
 										</a>
@@ -292,7 +292,7 @@
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
 									<div class="position-relative tm-thumbnail-container">
-										<img src="img/tn-06.jpg" alt="Image" class="img-fluid tm-catalog-item-img">
+										<img src="{{ url_for('static',filename='img/tn-06.jpg') }}" alt="Image" class="img-fluid tm-catalog-item-img">
 										<a href="video-page.html" class="position-absolute tm-img-overlay">
 											<i class="fas fa-play tm-overlay-icon"></i>
 										</a>
@@ -361,8 +361,8 @@
 		</div>
 	</div>
 
-	<script src="js/jquery-3.4.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<script src="{{ url_for('static',filename='js/jquery-3.4.1.min.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
 	<script>
 		$(document).ready(function () {
 			$('.tm-likes-box').click(function (e) {

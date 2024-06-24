@@ -10,17 +10,17 @@
    <!-- Google fonts -->
    <link rel="preconnect" href="https://fonts.googleapis.com/">
    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-   <link href="css/css2.css" rel="stylesheet">
+   <link href="static/css/css2.css" rel="stylesheet">
    <!-- Bootstrap-css include -->
-   <link rel="stylesheet" href="css/bootstrap.min.css">
+   <link rel="stylesheet" href="static/css/bootstrap.min.css">
    <!-- Animate-css include -->
-   <link rel="stylesheet" href="css/animate.min.css">
+   <link rel="stylesheet" href="static/css/animate.min.css">
    <!-- Main-StyleSheet include -->
-   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="static/css/style.css">
 
 
-   <link rel="stylesheet" type="text/css" href="css/default.css" />
-   <link rel="stylesheet" type="text/css" href="css/component.css" />
+   <link rel="stylesheet" type="text/css" href="static/css/default.css" />
+   <link rel="stylesheet" type="text/css" href="static/css/component.css" />
 </head>
 
 <body>
@@ -47,7 +47,7 @@
                      </div>
                      <div class="col-lg-4 text-center">
                         <div class="form_img">
-                           <img id="P1" src="picture/bg_1.png" alt="image_not_found">
+                           <img id="P1" src="{{ url_for('static',filename='picture/bg_1.png') }}" alt="image_not_found">
                         </div>
                      </div>
                      <div class="col-lg-4 text-end">
@@ -113,7 +113,7 @@
                      </div>
                      <div class="col-lg-4 text-center">
                         <div class="form_img">
-                           <img id="P2" src="picture/bg_2.png" alt="image_not_found">
+                           <img id="P2" src="{{ url_for('static',filename='picture/bg_2.png') }}" alt="image_not_found">
                         </div>
                      </div>
                      <div class="col-lg-4 text-end">
@@ -179,7 +179,7 @@
                      </div>
                      <div class="col-lg-4 text-center">
                         <div class="form_img">
-                           <img id="P3" src="picture/bg_3.png" alt="image_not_found">
+                           <img id="P3" src="{{ url_for('static',filename='picture/bg_3.png') }}" alt="image_not_found">
                         </div>
                      </div>
                      <div class="col-lg-4 text-end">
@@ -245,7 +245,7 @@
                      </div>
                      <div class="col-lg-4 text-center">
                         <div class="form_img">
-                           <img id="P4" src="picture/bg_4.png" alt="image_not_found">
+                           <img id="P4" src="{{ url_for('static',filename='picture/bg_4.png') }}" alt="image_not_found">
                         </div>
                      </div>
                      <div class="col-lg-4 text-end">
@@ -316,13 +316,13 @@
    </div>
 
    <!-- jQuery-js include -->
-   <script src="js/jquery-3.6.0.min.js"></script>
+   <script src="{{ url_for('static',filename='js/jquery-3.6.0.min.js') }}"></script>
    <!-- Bootstrap-js include -->
-   <script src="js/bootstrap.min.js"></script>
+   <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
    <!-- jQuery-validate-js include -->
-   <script src="js/jquery.validate.min.js"></script>
+   <script src="{{ url_for('static',filename='js/jquery.validate.min.js') }}"></script>
    <!-- Custom-js include -->
-   <script src="js/script.js"></script>
+   <script src="{{ url_for('static',filename='js/script.js') }}"></script>
 
    <script>
       function randomSort(a, b) { return Math.random() > 0.5 ? -1 : 1; }
@@ -393,28 +393,28 @@
       document.getElementById("Q1C2").innerHTML = Q[questionNum[0]][2];
       document.getElementById("Q1C3").innerHTML = Q[questionNum[0]][3];
       document.getElementById("Q1C4").innerHTML = Q[questionNum[0]][4];
-      document.getElementById("P1").src = "picture/image" + (questionNum[0] + 1) + ".png";
+      document.getElementById("P1").src = "static/picture/image" + (questionNum[0] + 1) + ".png";
 
       document.getElementById("Q2").innerHTML = Q[questionNum[1]][0];
       document.getElementById("Q2C1").innerHTML = Q[questionNum[1]][1];
       document.getElementById("Q2C2").innerHTML = Q[questionNum[1]][2];
       document.getElementById("Q2C3").innerHTML = Q[questionNum[1]][3];
       document.getElementById("Q2C4").innerHTML = Q[questionNum[1]][4];
-      document.getElementById("P2").src = "picture/image" + (questionNum[1] + 1) + ".png";
+      document.getElementById("P2").src = "static/picture/image" + (questionNum[1] + 1) + ".png";
 
       document.getElementById("Q3").innerHTML = Q[questionNum[2]][0];
       document.getElementById("Q3C1").innerHTML = Q[questionNum[2]][1];
       document.getElementById("Q3C2").innerHTML = Q[questionNum[2]][2];
       document.getElementById("Q3C3").innerHTML = Q[questionNum[2]][3];
       document.getElementById("Q3C4").innerHTML = Q[questionNum[2]][4];
-      document.getElementById("P3").src = "picture/image" + (questionNum[2] + 1) + ".png";
+      document.getElementById("P3").src = "static/picture/image" + (questionNum[2] + 1) + ".png";
 
       document.getElementById("Q4").innerHTML = Q[questionNum[3]][0];
       document.getElementById("Q4C1").innerHTML = Q[questionNum[3]][1];
       document.getElementById("Q4C2").innerHTML = Q[questionNum[3]][2];
       document.getElementById("Q4C3").innerHTML = Q[questionNum[3]][3];
       document.getElementById("Q4C4").innerHTML = Q[questionNum[3]][4];
-      document.getElementById("P4").src = "picture/image" + (questionNum[3] + 1) + ".png";
+      document.getElementById("P4").src = "static/picture/image" + (questionNum[3] + 1) + ".png";
       var elementNumber;
       var correct = [0, 0, 0, 0, 0];
       function showScore(elementNum) {
