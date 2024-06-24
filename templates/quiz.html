@@ -47,7 +47,7 @@
                      </div>
                      <div class="col-lg-4 text-center">
                         <div class="form_img">
-                           <img id="P1" src="picture/bg_1.png" alt="image_not_found">
+                           <img id="P1" src="{{ url_for('static',filename='picture/bg_1.png') }}" alt="image_not_found">
                         </div>
                      </div>
                      <div class="col-lg-4 text-end">
@@ -113,7 +113,7 @@
                      </div>
                      <div class="col-lg-4 text-center">
                         <div class="form_img">
-                           <img id="P2" src="picture/bg_2.png" alt="image_not_found">
+                           <img id="P2" src="{{ url_for('static',filename='picture/bg_2.png') }}" alt="image_not_found">
                         </div>
                      </div>
                      <div class="col-lg-4 text-end">
@@ -179,7 +179,7 @@
                      </div>
                      <div class="col-lg-4 text-center">
                         <div class="form_img">
-                           <img id="P3" src="picture/bg_3.png" alt="image_not_found">
+                           <img id="P3" src="{{ url_for('static',filename='picture/bg_3.png') }}" alt="image_not_found">
                         </div>
                      </div>
                      <div class="col-lg-4 text-end">
@@ -245,7 +245,7 @@
                      </div>
                      <div class="col-lg-4 text-center">
                         <div class="form_img">
-                           <img id="P4" src="picture/bg_4.png" alt="image_not_found">
+                           <img id="P4" src="{{ url_for('static',filename='picture/bg_4.png') }}" alt="image_not_found">
                         </div>
                      </div>
                      <div class="col-lg-4 text-end">
@@ -316,13 +316,13 @@
    </div>
 
    <!-- jQuery-js include -->
-   <script src="js/jquery-3.6.0.min.js"></script>
+   <script src="{{ url_for('static',filename='js/jquery-3.6.0.min.js') }}"></script>
    <!-- Bootstrap-js include -->
-   <script src="js/bootstrap.min.js"></script>
+   <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
    <!-- jQuery-validate-js include -->
-   <script src="js/jquery.validate.min.js"></script>
+   <script src="{{ url_for('static',filename='js/jquery.validate.min.js') }}"></script>
    <!-- Custom-js include -->
-   <script src="js/script.js"></script>
+   <script src="{{ url_for('static',filename='js/script.js') }}"></script>
 
    <script>
       function randomSort(a, b) { return Math.random() > 0.5 ? -1 : 1; }
