@@ -9,7 +9,7 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
-db = pymysql.Connect(host='127.0.0.1', port=3306, user='root', passwd='257908', db='shanghai_memory', charset='utf8')
+db = pymysql.Connect(host='127.0.0.1', port=3306, user='root', passwd='123456', db='shanghai_memory', charset='utf8')
 
 mailServer = zmail.server("shushujava@163.com", "BXTALULZASTKQYZK")
 
@@ -28,9 +28,10 @@ def commit():
 @app.route('/')
 def home():
     cursor = get_cursor()
-    sql = 'SELECT sourceURL, imgURL, title, content FROM news ORDER BY publishDate DESC LIMIT 10;'
+    sql = 'SELECT sourceURL, imgURL, title, content FROM news ORDER BY publishDate ASC LIMIT 10;'
     cursor.execute(sql)
     news = cursor.fetchall()
+    print(news)
     # news = [["sourceURL", "imgURL", "title", "content"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
     #         ["123", "456", "789", "012"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
     #         ["123", "456", "789", "012"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
@@ -38,6 +39,7 @@ def home():
     sql = 'SELECT name, email, content FROM comments ORDER BY publishDate DESC LIMIT 3;'
     cursor.execute(sql)
     comments = cursor.fetchall()
+    print(comments)
     commit()
     # comments = [["name", "email@email.com", "content"], ["123", "456@789.com", "abcdefg"],
     #             ["123", "456@789.com", "abcdefg"]]
