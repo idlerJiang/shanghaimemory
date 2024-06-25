@@ -1,42 +1,46 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import text
+import random
+
+import pymysql
+import zmail
+# from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, jsonify
+
+# SHmemory.123
 
 app = Flask(__name__)
 
-db = pymysql.Connect(host='127.0.0.1', port=3306, user='root', passwd='257908', db='coursesystem', charset='utf8')
+db = pymysql.Connect(host='127.0.0.1', port=3306, user='root', passwd='257908', db='shanghai_memory', charset='utf8')
+
+mailServer = zmail.server("shushujava@163.com", "BXTALULZASTKQYZK")
+
+
 # 上面的数据库信息待修改
 def get_cursor():
     db.ping(reconnect=True)
     return db.cursor()
+
+
 def commit():
     db.ping(reconnect=True)
     db.commit()
 
-# 如果不使用pymysql则使用下面的配置
-# HOSTNAME="127.0.0.1"
-# PORT="3306"
-# USERNAME="root"
-# PASSWORD='123456'
-# DATABASE='shanghai_memory'
-# #本文驱动为pymysql
-# app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{USERNAME}:{PASSWORD}@{HOSTNAME}:{PORT}/{DATABASE}?charset=utf8mb4'
-# db=SQLAlchemy(app)
-# with app.app_context():
-#     with db.engine.connect() as conn:
-#         rs = conn.execute(text("select * from news"))
-#         print(rs.fetchone())
-
 
 @app.route('/')
 def home():
-    news = [["sourceURL", "imgURL", "title", "content"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
-            ["123", "456", "789", "012"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
-            ["123", "456", "789", "012"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
-            ["123", "456", "789", "012"]]
-    comments = [["name", "email@email.com", "content"], ["123", "456@789.com", "abcdefg"],
-                ["123", "456@789.com", "abcdefg"]]
+    cursor = get_cursor()
+    sql = 'SELECT sourceURL, imgURL, title, content FROM news ORDER BY publishDate DESC LIMIT 10;'
+    cursor.execute(sql)
+    news = cursor.fetchall()
+    # news = [["sourceURL", "imgURL", "title", "content"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
+    #         ["123", "456", "789", "012"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
+    #         ["123", "456", "789", "012"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
+    #         ["123", "456", "789", "012"]]
+    sql = 'SELECT name, email, content FROM comments ORDER BY publishDate DESC LIMIT 3;'
+    cursor.execute(sql)
+    comments = cursor.fetchall()
+    commit()
+    # comments = [["name", "email@email.com", "content"], ["123", "456@789.com", "abcdefg"],
+    #             ["123", "456@789.com", "abcdefg"]]
     return render_template('index.html', news=news, comments=comments)
 
 
@@ -75,23 +79,18 @@ def getCAPTCHA():
     try:
         print("get CAPTCHA", request.json)
         email = request.json['email']
-        # 连接数据库
         cursor = get_cursor()
-        # 检查并使该邮箱所有未使用的验证码过期 
-
-        # 下列代码GPT生成 未验证
-        # ！！！
-        # ！！！
-        now = datetime.now()
-        query = "UPDATE captcha SET expiration = %s WHERE email = %s AND expiration > %s"
-        cursor.execute(query, (now, email, now))
-        # 生成新的验证码并保存到数据库
-        new_captcha_code = generate_captcha_code()
-        expiration_time = now + timedelta(minutes=15)
-        query = "INSERT INTO captcha (email, code, expiration) VALUES (%s, %s, %s)"
-        cursor.execute(query, (email, new_captcha_code, expiration_time))
-        connection.commit()
-        connection.close()
+        # 检查并使该邮箱所有未使用的验证码过期
+        sql = "DELETE FROM idcode WHERE email=%s;"
+        cursor.execute(sql, (email,))
+        sql = "INSERT INTO idcode (email, code, timestamp) VALUES (%s, %s, CURRENT_TIMESTAMP);"
+        code = random.randint(1, 999999)
+        formatted_code = "{:06d}".format(code)
+        cursor.execute(sql, (email, formatted_code))
+        mailServer.send_mail(email, {
+            'subject': 'Shanghai-Memory邮箱验证码',
+            'content_text': '您的邮箱验证码是：' + formatted_code + '。15分钟内有效。',
+        })
         return jsonify({'status': 'success'})
     except Exception as e:
         print("Error:", e)
@@ -100,9 +99,30 @@ def getCAPTCHA():
 
 @app.route('/submitComment', methods=['POST'])
 def submitComment():
-    print("???")
-    print(request.json)
-    return "success"
+    try:
+        print("submit comment", request.json)
+        # username: username,
+        # email: email,
+        # captcha: captcha,
+        # content: content
+        username = request.json['username']
+        email = request.json['email']
+        code = request.json['captcha']
+        content = request.json['content']
+        cursor = get_cursor()
+        # 检查并使该邮箱所有未使用的验证码过期
+        sql = "SELECT * FROM idcode WHERE email = %s AND code = %s AND timestamp >= NOW() - INTERVAL 15 MINUTE;"
+        count = cursor.execute(sql, (email, code))
+        if count > 0:
+            sql = "DELETE FROM idcode WHERE email=%s;"
+            cursor.execute(sql, (email,))
+            sql = "INSERT INTO comments(name, email, content, publishDate) VALUES (%s, %s, %s, CURRENT_TIMESTAMP);"
+            cursor.execute(sql, (username, email, content))
+            return jsonify({'status': 'success'})
+        return jsonify({'status': 'failed'})
+    except Exception as e:
+        print("Error:", e)
+        return jsonify({'status': 'failed'})
 
 
 @app.route('/timeline')
@@ -118,6 +138,7 @@ def episode1():
 @app.route('/episode2')
 def episode2():
     return render_template('episode2.html')
+
 
 @app.route('/episode3')
 def episode3():
