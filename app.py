@@ -5,6 +5,29 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
+db = pymysql.Connect(host='127.0.0.1', port=3306, user='root', passwd='257908', db='coursesystem', charset='utf8')
+# 上面的数据库信息待修改
+def get_cursor():
+    db.ping(reconnect=True)
+    return db.cursor()
+def commit():
+    db.ping(reconnect=True)
+    db.commit()
+
+# 如果不使用pymysql则使用下面的配置
+# HOSTNAME="127.0.0.1"
+# PORT="3306"
+# USERNAME="root"
+# PASSWORD='123456'
+# DATABASE='shanghai_memory'
+# #本文驱动为pymysql
+# app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{USERNAME}:{PASSWORD}@{HOSTNAME}:{PORT}/{DATABASE}?charset=utf8mb4'
+# db=SQLAlchemy(app)
+# with app.app_context():
+#     with db.engine.connect() as conn:
+#         rs = conn.execute(text("select * from news"))
+#         print(rs.fetchone())
+
 
 @app.route('/')
 def home():
@@ -49,9 +72,30 @@ def comments():
 
 @app.route('/getCAPTCHA', methods=['POST'])
 def getCAPTCHA():
-    print("!!!!")
-    print(request.json)
-    return jsonify()
+    try:
+        print("get CAPTCHA", request.json)
+        email = request.json['email']
+        # 连接数据库
+        cursor = get_cursor()
+        # 检查并使该邮箱所有未使用的验证码过期 
+
+        # 下列代码GPT生成 未验证
+        # ！！！
+        # ！！！
+        now = datetime.now()
+        query = "UPDATE captcha SET expiration = %s WHERE email = %s AND expiration > %s"
+        cursor.execute(query, (now, email, now))
+        # 生成新的验证码并保存到数据库
+        new_captcha_code = generate_captcha_code()
+        expiration_time = now + timedelta(minutes=15)
+        query = "INSERT INTO captcha (email, code, expiration) VALUES (%s, %s, %s)"
+        cursor.execute(query, (email, new_captcha_code, expiration_time))
+        connection.commit()
+        connection.close()
+        return jsonify({'status': 'success'})
+    except Exception as e:
+        print("Error:", e)
+        return jsonify({'status': 'failed'})
 
 
 @app.route('/submitComment', methods=['POST'])
@@ -74,21 +118,6 @@ def episode1():
 @app.route('/episode2')
 def episode2():
     return render_template('episode2.html')
-
-HOSTNAME="127.0.0.1"
-PORT="3306"
-USERNAME="root"
-PASSWORD='123456'
-DATABASE='shanghai_memory'
-#本文驱动为pymysql
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{USERNAME}:{PASSWORD}@{HOSTNAME}:{PORT}/{DATABASE}?charset=utf8mb4'
-
-db=SQLAlchemy(app)
-
-# with app.app_context():
-#     with db.engine.connect() as conn:
-#         rs = conn.execute(text("select * from news"))
-#         print(rs.fetchone())
 
 @app.route('/episode3')
 def episode3():
