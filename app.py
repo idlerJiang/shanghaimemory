@@ -9,10 +9,12 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
-db = pymysql.Connect(host='127.0.0.1', port=3306, user='root', passwd='123456', db='shanghai_memory', charset='utf8')
-
-mailServer = zmail.server("shushujava@163.com", "BXTALULZASTKQYZK")
-
+try:
+    db = pymysql.Connect(host='127.0.0.1', port=3306, user='shanghai', passwd='memory', db='shanghai_memory', charset='utf8')
+    mailServer = zmail.server("shushujava@163.com", "BXTALULZASTKQYZK")
+except Exception as e:
+    print("Error on connect to mysql or mail:", e)
+    exit()
 
 # 上面的数据库信息待修改
 def get_cursor():
@@ -27,23 +29,27 @@ def commit():
 
 @app.route('/')
 def home():
-    cursor = get_cursor()
-    sql = 'SELECT sourceURL, imgURL, title, content FROM news ORDER BY publishDate ASC LIMIT 10;'
-    cursor.execute(sql)
-    news = cursor.fetchall()
-    print(news)
-    # news = [["sourceURL", "imgURL", "title", "content"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
-    #         ["123", "456", "789", "012"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
-    #         ["123", "456", "789", "012"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
-    #         ["123", "456", "789", "012"]]
-    sql = 'SELECT name, email, content FROM comments ORDER BY publishDate DESC LIMIT 3;'
-    cursor.execute(sql)
-    comments = cursor.fetchall()
-    print(comments)
-    commit()
-    # comments = [["name", "email@email.com", "content"], ["123", "456@789.com", "abcdefg"],
-    #             ["123", "456@789.com", "abcdefg"]]
-    return render_template('index.html', news=news, comments=comments)
+    try:
+        cursor = get_cursor()
+        sql = 'SELECT sourceURL, imgURL, title, content FROM news ORDER BY publishDate DESC LIMIT 10;'
+        cursor.execute(sql)
+        news = cursor.fetchall()
+        print(news)
+        # news = [["sourceURL", "imgURL", "title", "content"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
+        #         ["123", "456", "789", "012"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
+        #         ["123", "456", "789", "012"], ["123", "456", "789", "012"], ["123", "456", "789", "012"],
+        #         ["123", "456", "789", "012"]]
+        sql = 'SELECT name, email, content FROM comments ORDER BY publishDate DESC LIMIT 3;'
+        cursor.execute(sql)
+        comments = cursor.fetchall()
+        print(comments)
+        commit()
+        # comments = [["name", "email@email.com", "content"], ["123", "456@789.com", "abcdefg"],
+        #             ["123", "456@789.com", "abcdefg"]]
+        return render_template('index.html', news=news, comments=comments)
+    except Exception as e:
+        print("Error:", e)
+        return "An error occurred. Please try again later."
 
 
 @app.route('/class')
@@ -95,7 +101,7 @@ def getCAPTCHA():
         })
         return jsonify({'status': 'success'})
     except Exception as e:
-        print("Error:", e)
+        print("Error on getCAPTCHA:", e)
         return jsonify({'status': 'failed'})
 
 
@@ -123,7 +129,7 @@ def submitComment():
             return jsonify({'status': 'success'})
         return jsonify({'status': 'failed'})
     except Exception as e:
-        print("Error:", e)
+        print("Error on submitComment:", e)
         return jsonify({'status': 'failed'})
 
 
@@ -174,3 +180,5 @@ def episode8():
 
 if __name__ == '__main__':
     app.run(debug=True)
+else:
+    application = app

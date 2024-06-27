@@ -87,7 +87,7 @@ VALUES ('孙清', '257864214@qq.com', '上海不仅是中国的金融中心，�
 CREATE TABLE idcode (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
-    name VARCHAR(255) NOT NULL,
+    // name VARCHAR(255) NOT NULL, 不需要
     code INT(6) NOT NULL,
     timestamp DATETIME NOT NULL
 ) CHARSET=utf8mb4;
