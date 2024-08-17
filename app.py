@@ -5,6 +5,8 @@ import zmail
 # from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, jsonify
 
+import filter
+
 # SHmemory.123
 
 app = Flask(__name__)
@@ -14,7 +16,7 @@ try:
     mailServer = zmail.server("shushujava@163.com", "BXTALULZASTKQYZK")
 except Exception as e:
     print("Error on connect to mysql or mail:", e)
-    exit()
+    # exit()
 
 # 上面的数据库信息待修改
 def get_cursor():
@@ -117,6 +119,10 @@ def submitComment():
         email = request.json['email']
         code = request.json['captcha']
         content = request.json['content']
+
+        # 检查是否有屏蔽词
+        content = filter.censore(content)
+
         cursor = get_cursor()
         # 检查并使该邮箱所有未使用的验证码过期
         sql = "SELECT * FROM idcode WHERE email = %s AND code = %s AND timestamp >= NOW() - INTERVAL 15 MINUTE;"
